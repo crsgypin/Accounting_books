@@ -2,45 +2,55 @@
 
 <h1>我的個人記帳簿</h1>
 
-<table>
-	<tr>
-		<th>消費時間	</th>
-		<th>描述		</th>
-		<th>主項目	</th>
-		<th>副項目	</th>
-		<th>其他項目 </th>
-		<th>消費方式 </th>
-		<th>備註</th>
-		<th></th>
-		<th></th>
-	</tr>
-	<% @abs.each do |ab| %>
-	<tr>
-		<td><%=ab.consume_date %>    </td>
-		<td><%=ab.description %>     </td>
-		<td><%=ab.main_class_id %>   </td>
-		<td><%=ab.subclass_id %>     </td>
-		<td><%=ab.third_class_id %>  </td>
-		<td><%=ab.consume_way_id %>  </td>
-		<td><%=ab.note %>      		</td>
-		<td><%=link_to "顯示", ab_path(ab)%> </td>
-		<td><%=button_to "修改", edit_ab_path(ab) %></td>
-		<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"} %> </td>
-	</tr>
-	<% end %>	
-	<tr>
-		<td></td>		
-		<td></td>
-		<td></td>		
-		<td></td>
-		<td></td>		
-		<td></td>
-		<td></td>		
-		<td><%=link_to "新增項目", new_ab_path %></td>
-	</tr>
-
-</table>
-
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped table-hover">
+			<tr>
+				<th>編號		</th>
+				<th>消費時間	</th>
+				<th>描述		</th>
+				<th>主項目	</th>
+				<th>副項目	</th>
+				<th>其他項目 </th>
+				<th>消費方式 </th>
+				<th>備註</th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+			<% count = 1 %>
+			<% @abs.each do |ab| %>
+			<tr>
+				<td><%=count %>              </td>
+				<td><%=ab.consume_date %>    </td>
+				<td><%=ab.description %>     </td>
+				<td><%=ab.main_class_id %>   </td>
+				<td><%=ab.subclass_id %>     </td>
+				<td><%=ab.third_class_id %>  </td>
+				<td><%=ab.consume_way_id %>  </td>
+				<td><%=ab.note %>      		</td>
+				<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-default"%> </td>
+				<td><%=link_to "修改", edit_ab_path(ab) %></td>
+				<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},    :class =>"btn btn-danger" %> </td>
+			</tr>
+			<% count += 1 %>
+			<% end %>	
+			<tr>
+				<td></td>		
+				<td></td>		
+				<td></td>
+				<td></td>		
+				<td></td>
+				<td></td>		
+				<td></td>
+				<td></td>		
+				<td><%=link_to "新增項目", new_ab_path, :class => "glyphicon glyphicon-plus" %></td>
+				<td></td>		
+				<td></td>		
+			</tr>
+		</table>
+	</div>
+</div>
 
 
 

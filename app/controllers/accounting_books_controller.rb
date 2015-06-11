@@ -1,4 +1,5 @@
 class AccountingBooksController < ApplicationController
+	before_action :set_ab, :only => [:show, :edit, :update, :destroy]
 
 	def index
 		@abs = AccountingBook.all
@@ -11,6 +12,7 @@ class AccountingBooksController < ApplicationController
 
 	end
 
+
 	def create
 		@ab = AccountingBook.new(ab_params)
 		if @ab.save
@@ -22,13 +24,19 @@ class AccountingBooksController < ApplicationController
 
 #show
 	def show
-		@ab = AccountingBook.find(params[:id])
 	end
 
+#edit
+	def edit
+	end
+
+	def update
+		@ab.update(ab_params)
+		redirect_to ab_index_url
+	end
 
 #delete
 	def destroy
-		@ab = AccountingBook.find(params[:id])
 		@ab.destroy
 		flash[:alert] = "Ths item has been delete!"
 		redirect_to ab_index_url
@@ -41,5 +49,8 @@ private
 		params.require(:accounting_book).permit(:consume_date, :description, :main_class_id, :subclass_id, :third_class_id, :consume_way_id, :note)
 	end
 
+	def set_ab
+		@ab = AccountingBook.find(params[:id])
+	end
 
 end
