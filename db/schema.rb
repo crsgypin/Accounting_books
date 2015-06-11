@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 20150611013328) do
   create_table "accounting_books", force: :cascade do |t|
     t.date     "consume_date"
     t.text     "description"
-    t.integer  "type1"
-    t.integer  "type2"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "main_type_id"
+    t.integer  "sub_type_id"
+    t.integer  "consume_way_id"
+    t.text     "other_note"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end

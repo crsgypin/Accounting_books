@@ -1,0 +1,9 @@
+
+<%= link_to "回到首頁",ab_index_path %>
+<%= form_for @ab, :url => ab_index_path do |form|%>
+	<%= render :partial => 'form', :locals => { :form => form } %>	
+	<%= form.submit "Create" %>
+		
+<% end %>
+
+

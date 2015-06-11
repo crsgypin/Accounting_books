@@ -3,8 +3,10 @@ class CreateAccountingBooks < ActiveRecord::Migration
     create_table :accounting_books do |t|
       t.date :consume_date
       t.text :description
-      t.integer :type1
-      t.integer :type2
+      t.integer :main_type_id
+      t.integer :sub_type_id
+      t.integer :consume_way_id
+      t.text :other_note
 
       t.timestamps null: false
     end

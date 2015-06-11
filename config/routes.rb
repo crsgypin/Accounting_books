@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :AccountingBooks
-  # root :to => "AccountingBooks#index"
+  resources :ab, controller: 'accounting_books'
+
+
+  root :to => "accounting_books#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
