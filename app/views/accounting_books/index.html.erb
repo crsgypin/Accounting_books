@@ -10,7 +10,7 @@
 		<th>副項目	</th>
 		<th>其他項目 </th>
 		<th>消費方式 </th>
-		<th>其他項目</th>
+		<th>備註</th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -23,7 +23,7 @@
 		<td><%=ab.third_class_id %>  </td>
 		<td><%=ab.consume_way_id %>  </td>
 		<td><%=ab.note %>      		</td>
-		<td><%=button_to "顯示", ab_path(ab)%> </td>
+		<td><%=link_to "顯示", ab_path(ab)%> </td>
 		<td><%=button_to "修改", edit_ab_path(ab) %></td>
 		<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"} %> </td>
 	</tr>

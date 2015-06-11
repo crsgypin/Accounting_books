@@ -1,0 +1,14 @@
+
+<p>你的資料表</p>
+<table>
+	<tr><td>消費時間	</td><td><%= @ab.consume_date %>   </td></tr>
+	<tr><td>描述		</td><td><%= @ab.description %>    </td></tr>
+	<tr><td>主項目	</td><td><%= @ab.main_class_id %>  </td></tr>
+	<tr><td>副項目	</td><td><%= @ab.subclass_id %>    </td></tr>
+	<tr><td>其他項目 </td><td><%= @ab.third_class_id %> </td></tr>
+	<tr><td>消費方式 </td><td><%= @ab.consume_way_id %> </td></tr>
+	<tr><td>備註     </td><td><%= @ab.note %>           </td></tr>
+</table>
+
+<%= link_to "回主列表", ab_index_path %>
+

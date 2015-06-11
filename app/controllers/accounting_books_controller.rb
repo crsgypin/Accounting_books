@@ -20,6 +20,10 @@ class AccountingBooksController < ApplicationController
 		end
 	end
 
+#show
+	def show
+		@ab = AccountingBook.find(params[:id])
+	end
 
 
 #delete
