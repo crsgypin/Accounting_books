@@ -2,19 +2,28 @@ class AccountingBooksController < ApplicationController
 	before_action :set_ab, :only => [:show, :edit, :update, :destroy]
 
 	def index
+		Rails.logger.debug("-----------------------------")		
+		Rails.logger.debug(params.inspect)
+		Rails.logger.debug(params[:edit_id])
 		@abs = AccountingBook.all
+
+		if params[:edit_id] == nil
+			@ab = AccountingBook.new
+		else
+			@ab = AccountingBook.find(params[:edit_id])
+		end
 
 	end
 
 #create
 	def new
 		@ab = AccountingBook.new
-
+		render ab_index_url
 	end
-
 
 	def create
 		@ab = AccountingBook.new(ab_params)
+
 		if @ab.save
 			redirect_to ab_index_url
 		else
@@ -28,6 +37,9 @@ class AccountingBooksController < ApplicationController
 
 #edit
 	def edit
+		Rails.logger.debug("-------------gogogo----------------")		
+		Rails.logger.debug(@ab.inspect)
+		redirect_to ab_index_url(:edit_id => @ab.id)
 	end
 
 	def update
@@ -38,7 +50,6 @@ class AccountingBooksController < ApplicationController
 #delete
 	def destroy
 		@ab.destroy
-		flash[:alert] = "Ths item has been delete!"
 		redirect_to ab_index_url
 	end
 
