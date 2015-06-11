@@ -22,6 +22,15 @@ class AccountingBooksController < ApplicationController
 
 
 
+#delete
+	def destroy
+		@ab = AccountingBook.find(params[:id])
+		@ab.destroy
+		flash[:alert] = "Ths item has been delete!"
+		redirect_to ab_index_url
+	end
+
+
 private
 
 	def ab_params

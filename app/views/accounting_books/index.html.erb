@@ -1,6 +1,6 @@
 
 
-<%= link_to "新增項目", new_ab_path %>
+<h1>我的個人記帳簿</h1>
 
 <table>
 	<tr>
@@ -11,6 +11,8 @@
 		<th>其他項目 </th>
 		<th>消費方式 </th>
 		<th>其他項目</th>
+		<th></th>
+		<th></th>
 	</tr>
 	<% @abs.each do |ab| %>
 	<tr>
@@ -20,9 +22,23 @@
 		<td><%=ab.subclass_id %>     </td>
 		<td><%=ab.third_class_id %>  </td>
 		<td><%=ab.consume_way_id %>  </td>
-		<td><%=ab.note %>      </td>
+		<td><%=ab.note %>      		</td>
+		<td><%=button_to "顯示", ab_path(ab)%> </td>
+		<td><%=button_to "修改", edit_ab_path(ab) %></td>
+		<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"} %> </td>
 	</tr>
 	<% end %>	
+	<tr>
+		<td></td>		
+		<td></td>
+		<td></td>		
+		<td></td>
+		<td></td>		
+		<td></td>
+		<td></td>		
+		<td><%=link_to "新增項目", new_ab_path %></td>
+	</tr>
+
 </table>
 
 
