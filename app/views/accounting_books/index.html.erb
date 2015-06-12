@@ -2,85 +2,141 @@
 
 <h1>我的個人記帳簿</h1>
 
+
+
+
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-striped table-hover table-condensed">
+		<table class="table table-striped table-hover table-condensed text-center">
 			<tr>
-				<th>編號		</th>
-				<th>消費時間	</th>
-				<th>描述		</th>
-				<th>費用		</th>
-				<th>主項目	</th>
-				<th>副項目	</th>
-				<th>其他項目 </th>
-				<th>消費方式 </th>
-				<th>備註</th>
-				<th></th>
-				<th></th>
-				<th></th>
+				<td>編號		</td>
+				<td>消費時間	</td>
+				<td>描述		</td>
+				<td>費用		</td>
+				<td>主項目	</td>
+				<td>副項目	</td>
+				<td>其他項目 </td>
+				<td>消費方式 </td>
+				<td>備註</td>
+				<td></td>
+				<td></td>
+				<td></td>
 			</tr>
 
 			<% count = 1 %>
 			<% @abs.each do |ab| %>
-				<% if @ab != ab %>
-					<tr>
-						<td><%=count %>              </td>
-						<td><%=ab.consume_date %>    </td>
-						<td><%=ab.description %>     </td>
-						<td><%=ab.cost %> 			 </td>
-						<td><%=ab.main_class_id %>   </td>
-						<td><%=ab.subclass_id %>     </td>
-						<td><%=ab.third_class_id %>  </td>
-						<td><%=ab.consume_way_id %>  </td>
-						<td><%=ab.note %>      		</td>
-						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>
-						<td><%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-warning" %></td>
-						<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},    :class =>"btn btn-danger" %> </td>
-					</tr>
+			<% if @ab != ab %>
+				<tr class="ab_row">
+					<td class="ab_col1"><%=count %>              </td>
+					<td class="ab_col2"><%=ab.consume_date %>    </td>
+					<td class="ab_col3"><%=ab.description %>     </td>
+					<td class="ab_col4"><%=ab.cost %> 			 </td>
+					<td class="ab_col5"><%=ab.main_class_id %>   </td>
+					<td class="ab_col6"><%=ab.subclass_id %>     </td>
+					<td class="ab_col7"><%=ab.third_class_id %>  </td>
+					<td class="ab_col8"><%=ab.consume_way_id %>  </td>
+					<td class="ab_col9"><%=ab.note %>      		</td>
+					<td class="ab_col10">
+						<%if @ab.id==nil %>
+						<%=link_to "顯示", "#", :class=>"btn btn-info", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
+						<% end %>
+					</td>				  
+					<td class="ab_col11">
+						<%if @ab.id==nil %>
+						<%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-warning" %>
+						<% end %>
+					</td>
+					<td class="ab_col12">
+						<%if @ab.id==nil %>
+						<%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},  :class =>"btn btn-danger" %> 
+						<% end %>
+					</td>
+				</tr>
 				<% else %>
-					<tr class="ab_input">
-					<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
-						<td><%= count %></td>		
-						<td><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
-						<td><%= form.text_field :description %></td>
-						<td><%= form.text_field :cost 	%></td>		
-						<td><%= form.text_field :main_class_id %></td>
-						<td class="short"><%= form.text_field :subclass_id %></td>		
-						<td class="short"></td>
-						<td class="short"><%= form.text_field :consume_way_id %></td>		
-						<td class="short"></td>
-						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>				  
-						<td><%= form.submit "更新", :class=>"btn btn-warning" %></td>		
-						<td><%= link_to '取消', ab_index_path(:edit_id=>nil), :class=>"btn btn-primary" %>
-						<td></td>		
-					</tr>
+
+				<tr class="ab_row warning">
+				<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
+					<td class="ab_col1"><%= count %></td>		
+					<td class="ab_col2"><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
+					<td class="ab_col3"><%= form.text_field :description %></td>
+					<td class="ab_col4"><%= form.text_field :cost 	%></td>		
+					<td class="ab_col5"><%= form.text_field :main_class_id %></td>
+					<td class="sb_col6"><%= form.text_field :subclass_id %></td>		
+					<td class="ab_col7"></td>
+					<td class="ab_col8"><%= form.text_field :consume_way_id %></td>		
+					<td class="ab_col9"></td>
+<%#link_to "顯示", ab_path(ab), :class=>"btn btn-info" %>
+
+					<td class="ab_col0">
+						<%=link_to "顯示", "#", :class=>"btn btn-info", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
+					</td>				  
+					<td class="ab_col11">
+						<%= form.submit "更新", :class=>"btn btn-warning" %>
+					</td>		
+					<td class="ab_col12">
+						<%= link_to '取消', ab_index_path(:edit_id=>nil), :class=>"btn btn-primary" %>	
+					</td>
+				</tr>
 					<% end %>
 				<% end %>
 				<% count += 1 %>
 			<% end %>					
 
-			<% if @ab.id == nil %>
-				<tr class="ab_input">
-				<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
-					<td><%= count %></td>		
-					<td><%= form.text_field :consume_date, :value => Date.today %></td>		
-					<td><%= form.text_field :description %></td>		
-					<td><%= form.text_field :cost %> 		</td>
-					<td><%= form.text_field :main_class_id %></td>
-					<td class="short"><%= form.text_field :subclass_id, :class=>"sub"%></td>		
-					<td class="short"></td>
-					<td class="short"><%= form.text_field :consume_way_id %></td>		
-					<td class="short"></td>
-					<%# form.submit "新增",:class=>"btn btn-success" %>
-					<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %></td>		
 
-				<% end %>
-					</tr>
-			<% end %>
 
 		</table>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-striped table-hover table-condensed">
+		<% if @ab.id == nil %>
+			<tr class="ab_row">
+			<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
+				<td class="ab_col1">0</td>		
+				<td class="ab_col2"><%= form.text_field :consume_date, :value => Date.today%></td>		
+				<td class="ab_col3"><%= form.text_field :description %></td>		
+				<td class="ab_col4"><%= form.text_field :cost %> 		</td>
+				<td class="ab_col5"><%= form.text_field :main_class_id %></td>
+				<td class="ab_col6"><%= form.text_field :subclass_id, :class=>"sub"%></td>		
+				<td class="ab_col7"></td>
+				<td class="ab_col8"><%= form.text_field :consume_way_id %></td>		
+				<td class="ab_col9"></td>
+				<%# form.submit "新增",:class=>"btn btn-success" %>
+				<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %></td>		
+			<% end %>
+			
+				</tr>
+		<% end %>
+		</table>
+	</div>
+</div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> -->
+  <!-- Launch demo modal -->
+<!-- </button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 

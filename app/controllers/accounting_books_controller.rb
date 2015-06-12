@@ -56,7 +56,8 @@ class AccountingBooksController < ApplicationController
 private
 
 	def ab_params
-		params.require(:accounting_book).permit(:consume_date, :description, :cost, :main_class_id, :subclass_id, :third_class_id, :consume_way_id, :note)
+		params.require(:accounting_book).permit(:consume_date, :description, :cost, :main_class_id, 
+												:subclass_id, :third_class_id, :consume_way_id, :note)
 	end
 
 	def set_ab
