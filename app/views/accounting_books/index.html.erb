@@ -43,14 +43,14 @@
 						<td><%= count %></td>		
 						<td><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
 						<td><%= form.text_field :description %></td>
-						<td><%= form.text_filed :cost 	%></td>		
+						<td><%= form.text_field :cost 	%></td>		
 						<td><%= form.text_field :main_class_id %></td>
 						<td class="short"><%= form.text_field :subclass_id %></td>		
 						<td class="short"></td>
 						<td class="short"><%= form.text_field :consume_way_id %></td>		
 						<td class="short"></td>
-						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>				  <td><%= form.submit "更新", :class=>"btn btn-warning" %>
-						<%#link_to "新增項目", new_ab_path, :class => "glyphicon glyphicon-plus" %></td>		
+						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>				  
+						<td><%= form.submit "更新", :class=>"btn btn-warning" %></td>		
 						<td><%= link_to '取消', ab_index_path(:edit_id=>nil), :class=>"btn btn-primary" %>
 						<td></td>		
 					</tr>
