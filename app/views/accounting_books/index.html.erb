@@ -4,11 +4,12 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<table class="table table-striped table-hover">
+		<table class="table table-striped table-hover table-condensed">
 			<tr>
 				<th>編號		</th>
 				<th>消費時間	</th>
 				<th>描述		</th>
+				<th>費用		</th>
 				<th>主項目	</th>
 				<th>副項目	</th>
 				<th>其他項目 </th>
@@ -21,47 +22,65 @@
 
 			<% count = 1 %>
 			<% @abs.each do |ab| %>
-			<% if @ab != ab %>
-				<tr>
-					<td><%=count %>              </td>
-					<td><%=ab.consume_date %>    </td>
-					<td><%=ab.description %>     </td>
-					<td><%=ab.main_class_id %>   </td>
-					<td><%=ab.subclass_id %>     </td>
-					<td><%=ab.third_class_id %>  </td>
-					<td><%=ab.consume_way_id %>  </td>
-					<td><%=ab.note %>      		</td>
-					<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-default"%> </td>
-					<td><%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-default" %></td>
-					<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},    :class =>"btn btn-danger" %> </td>
-				</tr>
-			<% else %>
-				<tr>
-
-				<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
-					<td><%= count %></td>		
-					<td><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
-					<td><%= form.text_field :description %></td>		
-					<td><%= form.text_field :main_class_id %></td>
-					<td class="short"><%= form.text_field :subclass_id %></td>		
-					<td class="short"><%= form.text_field :third_class_id %></td>
-					<td class="short"><%= form.text_field :consume_way_id %></td>		
-					<td class="short"></td>
-					<td><%= form.submit "更新" %>
-					<%#link_to "新增項目", new_ab_path, :class => "glyphicon glyphicon-plus" %></td>		
-
-					<td></td>		
-					<td></td>		
-				</tr>
+				<% if @ab != ab %>
+					<tr>
+						<td><%=count %>              </td>
+						<td><%=ab.consume_date %>    </td>
+						<td><%=ab.description %>     </td>
+						<td><%=ab.cost %> 			 </td>
+						<td><%=ab.main_class_id %>   </td>
+						<td><%=ab.subclass_id %>     </td>
+						<td><%=ab.third_class_id %>  </td>
+						<td><%=ab.consume_way_id %>  </td>
+						<td><%=ab.note %>      		</td>
+						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>
+						<td><%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-warning" %></td>
+						<td><%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},    :class =>"btn btn-danger" %> </td>
+					</tr>
+				<% else %>
+					<tr class="ab_input">
+					<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
+						<td><%= count %></td>		
+						<td><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
+						<td><%= form.text_field :description %></td>
+						<td><%= form.text_filed :cost 	%></td>		
+						<td><%= form.text_field :main_class_id %></td>
+						<td class="short"><%= form.text_field :subclass_id %></td>		
+						<td class="short"></td>
+						<td class="short"><%= form.text_field :consume_way_id %></td>		
+						<td class="short"></td>
+						<td><%=link_to "顯示", ab_path(ab), :class=>"btn btn-info"%> </td>				  <td><%= form.submit "更新", :class=>"btn btn-warning" %>
+						<%#link_to "新增項目", new_ab_path, :class => "glyphicon glyphicon-plus" %></td>		
+						<td><%= link_to '取消', ab_index_path(:edit_id=>nil), :class=>"btn btn-primary" %>
+						<td></td>		
+					</tr>
+					<% end %>
 				<% end %>
-			<% end %>
 				<% count += 1 %>
 			<% end %>					
+
+			<% if @ab.id == nil %>
+				<tr class="ab_input">
+				<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
+					<td><%= count %></td>		
+					<td><%= form.text_field :consume_date, :value => Date.today %></td>		
+					<td><%= form.text_field :description %></td>		
+					<td><%= form.text_field :cost %> 		</td>
+					<td><%= form.text_field :main_class_id %></td>
+					<td class="short"><%= form.text_field :subclass_id, :class=>"sub"%></td>		
+					<td class="short"></td>
+					<td class="short"><%= form.text_field :consume_way_id %></td>		
+					<td class="short"></td>
+					<%# form.submit "新增",:class=>"btn btn-success" %>
+					<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %></td>		
+
+				<% end %>
+					</tr>
+			<% end %>
+
 		</table>
 	</div>
 </div>
-
-
 
 
 

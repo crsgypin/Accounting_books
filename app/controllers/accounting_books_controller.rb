@@ -2,9 +2,9 @@ class AccountingBooksController < ApplicationController
 	before_action :set_ab, :only => [:show, :edit, :update, :destroy]
 
 	def index
-		Rails.logger.debug("-----------------------------")		
-		Rails.logger.debug(params.inspect)
-		Rails.logger.debug(params[:edit_id])
+		# Rails.logger.debug("-----------------------------")		
+		# Rails.logger.debug(params.inspect)
+		# Rails.logger.debug(params[:edit_id])
 		@abs = AccountingBook.all
 
 		if params[:edit_id] == nil
@@ -37,8 +37,6 @@ class AccountingBooksController < ApplicationController
 
 #edit
 	def edit
-		Rails.logger.debug("-------------gogogo----------------")		
-		Rails.logger.debug(@ab.inspect)
 		redirect_to ab_index_url(:edit_id => @ab.id)
 	end
 
@@ -46,6 +44,7 @@ class AccountingBooksController < ApplicationController
 		@ab.update(ab_params)
 		redirect_to ab_index_url
 	end
+
 
 #delete
 	def destroy
@@ -57,7 +56,7 @@ class AccountingBooksController < ApplicationController
 private
 
 	def ab_params
-		params.require(:accounting_book).permit(:consume_date, :description, :main_class_id, :subclass_id, :third_class_id, :consume_way_id, :note)
+		params.require(:accounting_book).permit(:consume_date, :description, :cost, :main_class_id, :subclass_id, :third_class_id, :consume_way_id, :note)
 	end
 
 	def set_ab
