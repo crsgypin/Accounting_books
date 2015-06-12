@@ -55,7 +55,7 @@
 				<% else %>
 
 				<tr class="ab_row warning">
-				<%= form_for @ab, :url => ab_index_path(@ab) do |form|%>
+				<%= form_for @ab, :url => ab_path(@ab), :method=>:patch do |form|%>
 					<td class="ab_col1"><%= count %></td>		
 					<td class="ab_col2"><%= form.text_field :consume_date, :value => '2015/6/12' %></td>		
 					<td class="ab_col3"><%= form.text_field :description %></td>
@@ -68,10 +68,10 @@
 <%#link_to "顯示", ab_path(ab), :class=>"btn btn-info" %>
 
 					<td class="ab_col0">
-						<%=link_to "顯示", "#", :class=>"btn btn-info", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
 					</td>				  
 					<td class="ab_col11">
 						<%= form.submit "更新", :class=>"btn btn-warning" %>
+						<%#link_to "更新", "#", :onclick => "$('.edit_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %>
 					</td>		
 					<td class="ab_col12">
 						<%= link_to '取消', ab_index_path(:edit_id=>nil), :class=>"btn btn-primary" %>	
