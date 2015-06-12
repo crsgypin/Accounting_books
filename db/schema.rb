@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150611013328) do
+ActiveRecord::Schema.define(version: 20150612131007) do
 
   create_table "accounting_books", force: :cascade do |t|
     t.date     "consume_date"
@@ -24,6 +24,32 @@ ActiveRecord::Schema.define(version: 20150611013328) do
     t.text     "note"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "consume_ways", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "main_classes", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "subclasses", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "main_class_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "third_classes", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "subclass_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end
