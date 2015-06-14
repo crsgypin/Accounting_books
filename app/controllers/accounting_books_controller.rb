@@ -5,7 +5,7 @@ class AccountingBooksController < ApplicationController
 		# Rails.logger.debug("-----------------------------")		
 		# Rails.logger.debug(params.inspect)
 		# Rails.logger.debug(params[:edit_id])
-		@abs = AccountingBook.all
+		@abs = AccountingBook.page(params[:page]).per(5)
 
 		if params[:edit_id] == nil
 			@ab = AccountingBook.new
