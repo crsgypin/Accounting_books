@@ -26,27 +26,28 @@
 			<% count = 1 %>
 			<% @abs.each do |ab| %>
 				<tr class="ab_row">
-					<td class="ab_col1"><%=count %>              </td>
-					<td class="ab_col2"><%=ab.consume_date %>    </td>
-					<td class="ab_col3"><%=ab.description %>     </td>
-					<td class="ab_col4"><%=ab.cost %> 			 </td>
-					<td class="ab_col5"><%=ab.main_class_name %>   </td>
-					<td class="ab_col6"><%=ab.subclass_name %>     </td>
-					<td class="ab_col7"><%=ab.third_class_name %>  </td>
-					<td class="ab_col8"><%=ab.consume_way_name %>  </td>
-					<td class="ab_col9"><%=ab.note %>      		</td>
-					<td class="ab_col10">
+					<td class="ab-col-index"><%=count %>              </td>
+					<td class="ab-col-date"><%=ab.consume_date %>    </td>
+					<td class="ab-col-desc"><%=ab.description %>     </td>
+					<td class="ab-col-cost"><%=ab.cost %> 			 </td>
+					<td class="ab-col-main"><%=ab.main_class_name %>   </td>
+					<td class="ab-col-sub"><%=ab.subclass_name %>     </td>
+					<td class="ab-col-third"><%=ab.third_class_name %>  </td>
+					<td class="ab-col-consume"><%=ab.consume_way_name %>  </td>
+					<td class="ab-col-note"><%=ab.note %>      		</td>
+					<td class="ab_col-btn1">
 						<%if @ab.id==nil %>
 						<%=link_to "顯示", "#", :class=>"btn btn-info btn-show-ab", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
 						<% end %>
+					</td>
 
-					</td>				  
-					<td class="ab_col11">
+					<td class="ab_col-btn2">
 						<%if @ab.id==nil %>
 						<%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-warning" %>
 						<% end %>
 					</td>
-					<td class="ab_col12">
+
+					<td class="ab_col-btn3">
 						<%if @ab.id==nil %>
 						<%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},  :class =>"btn btn-danger" %> 
 						<% end %>
@@ -70,7 +71,6 @@
 	<%= form_for @ab, url_hash do |form|%>
 		<table class="table table-condensed">
 			<tr class="ab_row">
-				<td>編號		</td>
 				<td>消費時間	</td>
 				<td>描述		</td>
 				<td>費用		</td>
@@ -81,21 +81,20 @@
 				<td>備註</td>				
 			</tr>
 			<tr class="ab_row">
-				<td class="ab_col1">0</td>		
-				<td class="ab_col2">
+				<td class="ab-col-date">
 					<% if @ab==nil %>
 					<%= form.text_field :consume_date, :value => Date.today %>
 					<% else %>
 					<%= form.text_field :consume_date%>
 					<% end %>
 				</td>	
-				<td class="ab_col3"><%= form.text_field :description %></td>		
-				<td class="ab_col4"><%= form.text_field :cost %> 		</td>
-				<td class="ab_col5"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
-				<td class="ab_col6"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
-				<td class="ab_col7"><%= form.collection_select(:third_class_id, ThirdClass.all, :id, :name) %></td>		
-				<td class="ab_col8"><%= form.collection_select(:consume_way_id, ConsumeWay.all, :id, :name) %></td>		
-				<td class="ab_col9"><%= form.text_field :note %></td>
+				<td class="ab-col-desc"><%= form.text_field :description %></td>		
+				<td class="ab-col-cost"><%= form.text_field :cost %> 		</td>
+				<td class="ab-col-main"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
+				<td class="ab-col-sub"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
+				<td class="ab-col-third"><%= form.collection_select(:third_class_id, ThirdClass.all, :id, :name) %></td>		
+				<td class="ab-col-consume"><%= form.collection_select(:consume_way_id, ConsumeWay.all, :id, :name) %></td>		
+				<td class="ab-col-note"><%= form.text_field :note %></td>
 				<%# form.submit "新增",:class=>"btn btn-success" %>
 				
 				<% if @ab.id == nil %>
@@ -124,12 +123,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"></h4>
+        <h4 class="modal-title" id="myModalLabel"> description</h4>
       </div>
       <div class="modal-body">
-			<table class='table'>
+			<table class='table table-hover'>
 				<tr><td>消費日期 </td><td>  consume_date </td></tr>
-				<tr><td>描述		</td><td>  description  </td></tr>
+				<!-- <tr><td>描述		</td><td>  description  </td></tr> -->
 				<tr><td>費用    </td><td>  cost 			</td></tr>
 				<tr><td>主項目   </td><td>  main_class	</td></tr>
 				<tr><td>副項目   </td><td>  subclass		</td></tr>
@@ -140,7 +139,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
       </div>
     </div>
   </div>
