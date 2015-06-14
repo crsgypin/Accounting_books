@@ -5,14 +5,15 @@ class AccountingBooksController < ApplicationController
 		# Rails.logger.debug("-----------------------------")		
 		# Rails.logger.debug(params.inspect)
 		# Rails.logger.debug(params[:edit_id])
-		@abs = AccountingBook.order('consume_date DESC').page(params[:page]).per(5)
+
+		set_abs
 
 		if params[:edit_id] == nil
 			@ab = AccountingBook.new
 		else
 			@ab = AccountingBook.find(params[:edit_id])
+			hash = params[:accounting_book];
 		end
-
 	end
 
 #create
@@ -25,9 +26,12 @@ class AccountingBooksController < ApplicationController
 		@ab = AccountingBook.new(ab_params)
 
 		if @ab.save
+			flash[:notice]="新增成功"
+			flash[:warning]=nil
 			redirect_to ab_index_url
 		else
-			render new_ab_url
+			set_abs
+			render :action => :index
 		end
 	end
 
@@ -41,14 +45,22 @@ class AccountingBooksController < ApplicationController
 	end
 
 	def update
-		@ab.update(ab_params)
-		redirect_to ab_index_url
+		if @ab.update(ab_params)
+			flash[:warning]="修改成功"
+			flash[:notice]=nil
+			redirect_to ab_index_url
+		else
+			set_abs
+			render :action => :index			
+		end
 	end
 
 
 #delete
 	def destroy
 		@ab.destroy
+		flash[:warning]="移除成功"
+		flash[:notice]=nil
 		redirect_to ab_index_url
 	end
 
@@ -62,6 +74,10 @@ private
 
 	def set_ab
 		@ab = AccountingBook.find(params[:id])
+	end
+
+	def set_abs
+		@abs = AccountingBook.order('consume_date DESC').page(params[:page]).per(5)
 	end
 
 end
