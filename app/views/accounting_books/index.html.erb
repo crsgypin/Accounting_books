@@ -6,26 +6,76 @@
 	<div class="col-md-6">
 		<h1>我的個人記帳簿</h1>		
 	</div>
-	<div class="col-md-4">
 <!-- message  -->
-		<%if @ab.errors.any?%>
-			<ul>
-			<% @ab.errors.full_messages.each do |e| %>
-				<li><%= e %></li>
-			<% end %>
-			</ul>
-		<% end %>
+
 
 		<%if flash[:notice]!=nil%>
-		<%=flash[:notice]%>
+		<div class="col-md-4 alert alert-success"><h4><%=flash[:notice]%></h4></div>
 		<%end%>
 
 		<%if flash[:warning]!=nil%>
-		<%=flash[:warning]%>
+		<div class="col-md-4 alert alert-warning"><h4><%=flash[:warning]%></h4></div>
 		<%end%>
 
-	</div>
 </div>
+
+
+<!--- index and edit pages -->
+
+<% url_hash = (@ab.id == nil)? {:url => ab_index_path(@ab)} : {:url => ab_path(@ab), :method => "patch"} %>
+
+<div class="row">
+	<div class="col-md-12">
+	<%= form_for @ab, url_hash do |form|%>
+		<table class="table table-condensed">
+			<tr class="ab_row">
+				<td>消費時間	</td>
+				<td>描述		</td>
+				<td>費用		</td>
+				<td>主項目	</td>
+				<td>副項目	</td>
+				<td>其他項目 </td>
+				<td>消費方式 </td>
+				<td>備註</td>				
+			</tr>
+			<tr class="ab_row">
+				<% warning_hash = {} %>
+				<% warning_hash[:style] =  (@ab.errors.any?)? "border:1px solid red;": "" %>
+				<td class="ab-col-date">
+					<% date_hash = warning_hash.clone %>
+					<% date_hash[:value] = Date.today if @ab.id ==nil %>
+					<%= form.text_field :consume_date, date_hash %>
+				</td>	
+				<td class="ab-col-desc">
+					<%= form.text_field :description, warning_hash %>
+				</td>		
+				<td class="ab-col-cost">
+					<%= form.text_field :cost, warning_hash %> 		
+				</td>
+				<td class="ab-col-main"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
+				<td class="ab-col-sub"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
+				<td class="ab-col-third"><%= form.collection_select(:third_class_id, ThirdClass.all, :id, :name) %></td>		
+				<td class="ab-col-consume"><%= form.collection_select(:consume_way_id, ConsumeWay.all, :id, :name) %></td>		
+				<td class="ab-col-note"><%= form.text_field :note %></td>
+				<%# form.submit "新增",:class=>"btn btn-success" %>
+				
+				<% if @ab.id == nil %>
+					<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %>
+					</td>		
+				<% else %>
+					<td><%= form.submit '更新', :class => 'btn btn-warning'%></td>
+					<td><%= link_to '取消', ab_index_path, :class => 'btn btn-info cancel-update'%></td>
+					<!-- <td colspan="3"><%#button_to "更新", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %></td>		 -->
+				<% end %>						
+				</tr>
+		</table>
+	<% end %><!-- form -->
+
+	</div><!-- col-md-12 -->
+</div><!-- row -->
+
+
+<!-- data content -->
 <div class="row data-row">
 	<div class="col-md-12">
 		<table class="table table-striped table-hover table-condensed text-center">
@@ -46,7 +96,11 @@
 
 			<% count = 1 %>
 			<% @abs.each do |ab| %>
+				<% if @ab == ab %>
+				<tr class="ab_row danger">
+				<% else %>
 				<tr class="ab_row">
+				<% end %>
 					<td class="ab-col-index"><%=count %>              </td>
 					<td class="ab-col-date"><%=ab.consume_date %>    </td>
 					<td class="ab-col-desc"><%=ab.description %>     </td>
@@ -83,55 +137,8 @@
 
 <%= paginate @abs %>
 
-<!--- index and edit pages -->
 
-<% url_hash = (@ab.id == nil)? {:url => ab_index_path(@ab)} : {:url => ab_path(@ab), :method => "patch"} %>
 
-<div class="row">
-	<div class="col-md-12">
-	<%= form_for @ab, url_hash do |form|%>
-		<table class="table table-condensed">
-			<tr class="ab_row">
-				<td>消費時間	</td>
-				<td>描述		</td>
-				<td>費用		</td>
-				<td>主項目	</td>
-				<td>副項目	</td>
-				<td>其他項目 </td>
-				<td>消費方式 </td>
-				<td>備註</td>				
-			</tr>
-			<tr class="ab_row">
-				<td class="ab-col-date">
-					<% if @ab==nil %>
-					<%= form.text_field :consume_date, :value => Date.today %>
-					<% else %>
-					<%= form.text_field :consume_date%>
-					<% end %>
-				</td>	
-				<td class="ab-col-desc"><%= form.text_field :description %></td>		
-				<td class="ab-col-cost"><%= form.text_field :cost %> 		</td>
-				<td class="ab-col-main"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
-				<td class="ab-col-sub"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
-				<td class="ab-col-third"><%= form.collection_select(:third_class_id, ThirdClass.all, :id, :name) %></td>		
-				<td class="ab-col-consume"><%= form.collection_select(:consume_way_id, ConsumeWay.all, :id, :name) %></td>		
-				<td class="ab-col-note"><%= form.text_field :note %></td>
-				<%# form.submit "新增",:class=>"btn btn-success" %>
-				
-				<% if @ab.id == nil %>
-					<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %>
-					</td>		
-				<% else %>
-					<td><%= form.submit '更新', :class => 'btn btn-warning'%></td>
-					<td><%= link_to '取消', ab_index_path, :class => 'btn btn-info cancel-update'%></td>
-					<!-- <td colspan="3"><%#button_to "更新", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %></td>		 -->
-				<% end %>						
-				</tr>
-		</table>
-	<% end %><!-- form -->
-
-	</div><!-- col-md-12 -->
-</div><!-- row -->
 
 <!-- Button trigger modal -->
 <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> -->
