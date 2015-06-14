@@ -27,7 +27,7 @@
 <div class="row">
 	<div class="col-md-12">
 	<%= form_for @ab, url_hash do |form|%>
-		<table class="table table-condensed">
+		<table class="table table-condensed form-table">
 			<tr class="ab_row">
 				<td>消費時間	</td>
 				<td>描述		</td>
@@ -42,15 +42,13 @@
 				<% warning_hash = {} %>
 				<% warning_hash[:style] =  (@ab.errors.any?)? "border:1px solid red;": "" %>
 				<td class="ab-col-date">
-					<% date_hash = warning_hash.clone %>
-					<% date_hash[:value] = Date.today if @ab.id ==nil %>
-					<%= form.text_field :consume_date, date_hash %>
+					<%= form.date_field :consume_date,value: Date.today%>
 				</td>	
 				<td class="ab-col-desc">
 					<%= form.text_field :description, warning_hash %>
 				</td>		
 				<td class="ab-col-cost">
-					<%= form.text_field :cost, warning_hash %> 		
+					<%= form.number_field :cost, warning_hash %> 		
 				</td>
 				<td class="ab-col-main"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
 				<td class="ab-col-sub"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
@@ -77,7 +75,7 @@
 
 <!-- data content -->
 <div class="row data-row">
-	<div class="col-md-12">
+	<div class="col-md-12 data-table">
 		<table class="table table-striped table-hover table-condensed text-center">
 			<tr>
 				<td>編號		</td>
