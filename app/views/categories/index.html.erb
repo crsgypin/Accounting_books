@@ -1,0 +1,42 @@
+
+
+
+<%= link_to "回到記帳簿", ab_index_path%>
+
+<%# form_for @ab, url_hash do |form|%>
+<%= form_for @main_cat, :url=>categories_path, :method=>'get' do |f|  %>
+	<%= f.label :name, "主項目" %>
+	<%= f.text_field :name, :class => "form-control" %>
+
+	<%= f.label 'subclass', "次項目" %>
+	<%= text_field_tag 'subclass'%>
+
+	<%= f.label 'third_cat', "其他項目" %>
+	<%= text_field_tag 'third_cat'%>
+
+
+	<%= f.submit "更新" %>	
+<%= button_to 'abc', category_path(1), :method=>'post'%>
+<% end %>
+
+
+
+
+
+<!---
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+			<th>
+				
+
+			</th>
+
+		</table>
+
+	</div>
+
+
+</div>
+
+-->

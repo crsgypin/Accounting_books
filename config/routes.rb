@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :ab, controller: 'accounting_books'
+  resources :categories
 
 
   root :to => "accounting_books#index"
