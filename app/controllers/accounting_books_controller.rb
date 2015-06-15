@@ -10,6 +10,13 @@ class AccountingBooksController < ApplicationController
 			@ab = AccountingBook.find(params[:edit_id])
 			hash = params[:accounting_book];
 		end
+
+		respond_to do |format|
+			format.html
+			format.js
+			format.json
+		end
+
 	end
 
 	def new
@@ -31,6 +38,23 @@ class AccountingBooksController < ApplicationController
 	end
 
 	def show
+		respond_to do |format|
+			format.json {
+					# render :json=>@ab.to_json
+					render :json=> {:id =>@ab.id, 
+													:consume_date => @ab.consume_date,
+													:description => @ab.description, 
+													:cost => @ab.cost,
+													:main_class => @ab.main_class.name,
+													:subclass => @ab.subclass.name,
+													:third_class => @ab.third_class.name,
+													:consume_way => @ab.consume_way.name,
+													:note => @ab.note
+												}
+
+				}
+		end
+
 	end
 
 	def edit

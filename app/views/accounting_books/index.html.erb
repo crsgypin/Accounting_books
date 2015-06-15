@@ -109,7 +109,7 @@
 					<td class="ab-col-note"><%=ab.note %>      		</td>
 					<td class="ab_col-btn1">
 						<%if @ab.new_record? %>
-						<%=link_to "顯示", "#", :class=>"btn btn-info btn-show-ab", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
+						<%=link_to "顯示", ab_path(ab), :class=>"btn btn-info btn-show-ab", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button",:remote=>true,:data =>{:type=>:json} %> 
 						<% end %>
 					</td>
 
@@ -134,6 +134,7 @@
 <%= paginate @abs %>
 
 
+<div id="ab_area"></div>
 
 
 <!-- Button trigger modal -->

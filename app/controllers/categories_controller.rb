@@ -12,7 +12,6 @@ class CategoriesController < ApplicationController
 		@subcat = Subclass.new
 		@third_cat = ThirdClass.new
 
-		Rails.logger.debug('============ creating ============')
 		redirect_to categories_path
 	end
 

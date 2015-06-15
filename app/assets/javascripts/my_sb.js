@@ -1,27 +1,51 @@
-$(document).on("click", ".btn-show-ab", function () {
+$(document).ready(function(){
+	$(document).on("click", ".btn-show-ab", function () {
 
 
-	$(".modal-title").text($(this).parent().parent().children("td.ab-col-desc").text());
+		$(".modal-title").text($(this).parent().parent().children("td.ab-col-desc").text());
 
-	var content = $(".modal-body").html();
-	content = content.replace("consume_date",$(this).parent().parent().children("td.ab-col-date").text());
-	// content = content.replace("description" ,$(this).parent().parent().children("td.ab-col-desc").text());
-	content = content.replace("cost"		,$(this).parent().parent().children("td.ab-col-cost").text());
-	content = content.replace("main_class"	,$(this).parent().parent().children("td.ab-col-main").text());
-	content = content.replace("subclass"	,$(this).parent().parent().children("td.ab-col-sub").text());
-	content = content.replace("third_class"	,$(this).parent().parent().children("td.ab-col-third").text());
-	content = content.replace("consume_way"	,$(this).parent().parent().children("td.ab-col-consume").text());
-	content = content.replace("note"		,$(this).parent().parent().children("td.ab-col-note").text());
+/*
+	 $.ajax({
+	    // type: "GET",
+	    // url: $(".btn-show-ab").attr('href')
+	    // dataType: "JSON",
+	    success: function(data) {
 
-	// console.log(content);
-	$(".modal-body").html(content);
+		var event_area=$('#event_area');
+		$(".modal-title").text(ab['description']);
+		var content = $(".modal-body").html();
+		content = content.replace("consume_date",ab['consume_date']);
+		content = content.replace("description",ab['description']);
+		content = content.replace("cost",ab['cost']);
+		content = content.replace("main_class",ab['main_class']);
+		content = content.replace("subclass",ab['subclass']);
+		content = content.replace("third_class",ab['third_class']);
+		content = content.replace("consume_way",ab['consume_way']);
+		content = content.replace("note",ab['note']);
+		console.log(content);
+		$(".modal-body").html(content);
 
-	 // console.log($(this).parent().children("div.content").text());
-     // console.log($(this).parent().parent().attr("class"));
-     // console.log($(this).parent().parent().children());     
-     // console.log($(this).parent().parent().html());
-     // $('#addBookDialog').modal('show');
+	    }
+	  });
+*/
+	});
+
+	$('.btn-show-ab').on("ajax:success",function(event,ab){
+		var event_area=$('#event_area');
+
+		$(".modal-title").text(ab['description']);
+		var content = $(".modal-body").html();
+		content = content.replace("consume_date",ab['consume_date']);
+		content = content.replace("description",ab['description']);
+		content = content.replace("cost",ab['cost']);
+		content = content.replace("main_class",ab['main_class']);
+		content = content.replace("subclass",ab['subclass']);
+		content = content.replace("third_class",ab['third_class']);
+		content = content.replace("consume_way",ab['consume_way']);
+		content = content.replace("note",ab['note']);
+		console.log(content);
+		$(".modal-body").html(content);
+	});
 
 });
-
 
