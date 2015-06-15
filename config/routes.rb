@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   resources :ab, controller: 'accounting_books'
   resources :categories
 
