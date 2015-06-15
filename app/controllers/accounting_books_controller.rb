@@ -2,10 +2,6 @@ class AccountingBooksController < ApplicationController
 	before_action :set_ab, :only => [:show, :edit, :update, :destroy]
 
 	def index
-		# Rails.logger.debug("-----------------------------")		
-		# Rails.logger.debug(params.inspect)
-		# Rails.logger.debug(params[:edit_id])
-
 		set_abs
 
 		if params[:edit_id] == nil
@@ -16,7 +12,6 @@ class AccountingBooksController < ApplicationController
 		end
 	end
 
-#create
 	def new
 		@ab = AccountingBook.new
 		render ab_index_url
@@ -27,7 +22,7 @@ class AccountingBooksController < ApplicationController
 
 		if @ab.save
 			flash[:notice]="新增成功"
-			flash[:warning]=nil
+
 			redirect_to ab_index_url
 		else
 			set_abs
@@ -35,11 +30,9 @@ class AccountingBooksController < ApplicationController
 		end
 	end
 
-#show
 	def show
 	end
 
-#edit
 	def edit
 		redirect_to ab_index_url(:edit_id => @ab.id)
 	end
@@ -47,7 +40,6 @@ class AccountingBooksController < ApplicationController
 	def update
 		if @ab.update(ab_params)
 			flash[:warning]="修改成功"
-			flash[:notice]=nil
 			redirect_to ab_index_url
 		else
 			set_abs
@@ -55,17 +47,13 @@ class AccountingBooksController < ApplicationController
 		end
 	end
 
-
-#delete
 	def destroy
 		@ab.destroy
 		flash[:warning]="移除成功"
-		flash[:notice]=nil
 		redirect_to ab_index_url
 	end
 
-
-private
+	private
 
 	def ab_params
 		params.require(:accounting_book).permit(:consume_date, :description, :cost, :main_class_id, 

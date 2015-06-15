@@ -1,7 +1,3 @@
-
-
-
-
 <div class="row">
 	<div class="col-md-6">
 		<h1>我的個人記帳簿</h1>		
@@ -9,12 +5,12 @@
 <!-- message  -->
 
 
-		<%if flash[:notice]!=nil%>
-		<div class="col-md-4 alert alert-success"><h4><%=flash[:notice]%></h4></div>
+		<% if flash[:notice] %>
+			<div class="col-md-4 alert alert-success"><h4><%=flash[:notice]%></h4></div>
 		<%end%>
 
-		<%if flash[:warning]!=nil%>
-		<div class="col-md-4 alert alert-warning"><h4><%=flash[:warning]%></h4></div>
+		<% if flash[:warning] %>
+			<div class="col-md-4 alert alert-warning"><h4><%=flash[:warning]%></h4></div>
 		<%end%>
 
 </div>
@@ -26,7 +22,12 @@
 
 <!--- index and edit pages -->
 
-<% url_hash = (@ab.id == nil)? {:url => ab_index_path(@ab)} : {:url => ab_path(@ab), :method => "patch"} %>
+<% url_hash = if @ab.new_record?
+						    { :url => ab_index_path } 
+						  else
+						 		{ :url => ab_path(@ab), :method => "patch" }
+						  end
+%>
 
 <div class="row">
 	<div class="col-md-12">
@@ -42,27 +43,24 @@
 				<td>消費方式 </td>
 				<td>備註</td>				
 			</tr>
-			<tr class="ab_row">
-				<% warning_hash = {} %>
-				<% warning_hash[:style] =  (@ab.errors.any?)? "border:1px solid red;": "" %>
+			<tr class="ab_row">	
 				<td class="ab-col-date">
 					<%= form.date_field :consume_date,value: Date.today%>
 				</td>	
 				<td class="ab-col-desc">
-					<%= form.text_field :description, warning_hash %>
+					<%= form.text_field :description, :class => (@ab.errors[:description].any?)? "field-error" : ""  %>
 				</td>		
 				<td class="ab-col-cost">
-					<%= form.number_field :cost, warning_hash %> 		
+					<%= form.number_field :cost, :class => (@ab.errors[:cost].any?)? "field-error" : ""  %> 		
 				</td>
 				<td class="ab-col-main"><%= form.collection_select(:main_class_id, MainClass.all, :id, :name)%>
 				<td class="ab-col-sub"><%= form.collection_select(:subclass_id, Subclass.all, :id, :name) %></td>
 				<td class="ab-col-third"><%= form.collection_select(:third_class_id, ThirdClass.all, :id, :name) %></td>		
 				<td class="ab-col-consume"><%= form.collection_select(:consume_way_id, ConsumeWay.all, :id, :name) %></td>		
 				<td class="ab-col-note"><%= form.text_field :note %></td>
-				<%# form.submit "新增",:class=>"btn btn-success" %>
 				
-				<% if @ab.id == nil %>
-					<td colspan="3"><%=link_to "新增項目", "#", :onclick => "$('#new_accounting_book').submit()", :class => "glyphicon glyphicon-plus" %>
+				<% if @ab.new_record? %>
+					<td colspan="3"><%=form.submit "新增項目", :class => "btn btn-primary" %>
 					</td>		
 				<% else %>
 					<td><%= form.submit '更新', :class => 'btn btn-warning'%></td>
@@ -96,14 +94,11 @@
 				<td></td>
 			</tr>
 
-			<% count = 1 %>
-			<% @abs.each do |ab| %>
-				<% if @ab == ab %>
-				<tr class="ab_row danger">
-				<% else %>
-				<tr class="ab_row">
-				<% end %>
-					<td class="ab-col-index"><%=count %>              </td>
+			<% @abs.each_with_index do |ab, i| %>
+				
+				<tr class="ab_row <%= (@ab == ab)? "danger" : "" %>">
+
+					<td class="ab-col-index"><%= i+1 %>              </td>
 					<td class="ab-col-date"><%=ab.consume_date %>    </td>
 					<td class="ab-col-desc"><%=ab.description %>     </td>
 					<td class="ab-col-cost"><%=ab.cost %> 			 </td>
@@ -113,24 +108,23 @@
 					<td class="ab-col-consume"><%=ab.consume_way_name %>  </td>
 					<td class="ab-col-note"><%=ab.note %>      		</td>
 					<td class="ab_col-btn1">
-						<%if @ab.id==nil %>
+						<%if @ab.new_record? %>
 						<%=link_to "顯示", "#", :class=>"btn btn-info btn-show-ab", :"data-toggle"=>"modal", :"data-target"=>"#myModal", :type=>"button" %> 
 						<% end %>
 					</td>
 
 					<td class="ab_col-btn2">
-						<%if @ab.id==nil %>
+						<%if @ab.new_record? %>
 						<%=link_to "修改", edit_ab_path(ab), :class=>"btn btn-warning" %>
 						<% end %>
 					</td>
 
 					<td class="ab_col-btn3">
-						<%if @ab.id==nil %>
+						<%if @ab.new_record? %>
 						<%=button_to "移除", ab_path(ab), :method => :delete, data: { confirm: "Are you sure?"},  :class =>"btn btn-danger" %> 
 						<% end %>
 					</td>
 				</tr>
-				<% count += 1 %>
 			<% end %><!-- @abs.each -->					
 
 		</table>
