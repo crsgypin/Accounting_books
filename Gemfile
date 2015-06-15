@@ -39,6 +39,10 @@ gem 'kaminari'
 # gem 'capistrano-rails', group: :development
 
 
+#devise
+ gem 'devise'
+
+
  gem 'pg'
  gem 'rails_12factor', group: :production
 
