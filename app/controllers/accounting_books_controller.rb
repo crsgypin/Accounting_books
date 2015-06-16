@@ -1,5 +1,6 @@
 class AccountingBooksController < ApplicationController
 	before_action :set_ab, :only => [:show, :edit, :update, :destroy]
+	before_action :authenticate_user!
 
 	def index
 		set_abs
