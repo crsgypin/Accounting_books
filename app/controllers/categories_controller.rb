@@ -12,6 +12,7 @@ class CategoriesController < ApplicationController
 		@subcat = Subclass.new
 		@third_cat = ThirdClass.new
 		redirect_to categories_path
+		
 	end
 
 	def update

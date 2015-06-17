@@ -39,6 +39,12 @@ gem 'kaminari'
 # gem 'capistrano-rails', group: :development
 
 
+#devise
+ gem 'devise'
+
+#letter opener
+gem "letter_opener", :group => :development
+
  gem 'pg'
  gem 'rails_12factor', group: :production
 
