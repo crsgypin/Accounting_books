@@ -11,7 +11,6 @@ class CategoriesController < ApplicationController
 		@main_cat = MainClass.new()
 		@subcat = Subclass.new
 		@third_cat = ThirdClass.new
-
 		redirect_to categories_path
 	end
 
